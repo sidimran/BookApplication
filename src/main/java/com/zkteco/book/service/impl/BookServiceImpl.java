@@ -256,7 +256,7 @@ public class BookServiceImpl implements BookService {
 				errorCount++;
 				count1.setErrorCount(errorCount);
 				BookDTO res1 = new BookDTO();
-				res1.setCode("Emp005");
+				res1.setCode("book005");
 				res1.setMessage("id not found");
 				res1.setData("id : " + st);
 				res2.add(res1);
@@ -266,7 +266,7 @@ public class BookServiceImpl implements BookService {
 		List<Object> obj = new ArrayList<Object>();
 		obj.add(count);
 		obj.add(count1);
-		res.setCode("Emp005");
+		res.setCode("book005");
 		res.setMessage("One or more objects are not processed");
 		res.setData(obj);
 		return res;
