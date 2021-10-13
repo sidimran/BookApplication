@@ -163,112 +163,54 @@ public class BookServiceImpl implements BookService {
 		return bookDto;
 	}
 
-//	@Override
-//	public BookDTO deleteBulkById(String ids) {
-//
-//		SuccessCount successCount = new SuccessCount();
-//		ErrorCount errorCount = new ErrorCount();
-//		BookDTO bookDTO = new BookDTO();
-//
-//		String[] str = null;
-//		str = ids.split(",");
-//		int counter = 0;
-//		int flag = 0;
-//
-//		ArrayList<String> successCounts = new ArrayList<String>();
-//		ArrayList<String> errorCounts = new ArrayList<String>();
-//		
-//		
-//		List<SuccessCount> list = new ArrayList<SuccessCount>();
-//        List<ErrorCount> li = new ArrayList<ErrorCount>();
-//       
-//        BookDTO dto = new BookDTO();
-//        List<BookDTO> bkres = new ArrayList<BookDTO>();
-//		for (String string : str) {
-//
-//			if (bookRepository.existsById(string)) {
-//				bookRepository.deleteById(string);
-//				successCounts.add(string);
-//				counter++;
-//				successCount.setSuccessCount(counter);
-//				successCount.setSuccess("ids: " + successCounts);
-//				list.add(successCount);
-//			}
-//
-//			else {
-//				flag++;
-//				errorCount.setErrorCount(flag);
-////				errorCount.setFailure(str);
-////				li.add(errorCount);
-//				dto.setCode("Book190");
-//				dto.setMessage("Id not found");
-//				errorCounts.add(string);
-//				dto.setData("ids : " + string);
-//				
-//				
-//				bkres.add(dto);
-//				errorCount.setFailure(bkres);
-//				li.add(errorCount);
-//
-//			}
-//
-//		}
-//
-//		List<Object> obj = new ArrayList<Object>();
-//		obj.add(successCount);
-//		obj.add(li);
-//
-//		bookDTO.setCode("book111");
-//		bookDTO.setMessage("One or more objects are not processed");
-//		bookDTO.setData(obj);
-//
-//		return bookDTO;
-//	}
-
+	@Override
 	public BookDTO deleteBulkById(String ids) throws BookNotFoundException {
 
-		String[] strArr = null;
-		strArr = ids.split(",");
-		int successCount = 0;
-		int errorCount = 0;
-		BookDTO res = new BookDTO();
+		String[] str = null;
+		str = ids.split(",");
+		int counter = 0;
+		int flag = 0;
+		BookDTO bookDTO1 = new BookDTO();
 
-		List<SuccessCount> ct = new ArrayList<SuccessCount>();
 		SuccessCount count = new SuccessCount();
+		ErrorCount count2 = new ErrorCount();
+		ArrayList<String> successCounts = new ArrayList<String>();
+		List<SuccessCount> list = new ArrayList<SuccessCount>();
+		List<BookDTO> errorCounts = new ArrayList<BookDTO>();
 
-		ErrorCount count1 = new ErrorCount();
+		for (String string : str) {
 
-		ArrayList<String> s = new ArrayList<String>();
-		List<BookDTO> res2 = new ArrayList<BookDTO>();
+			if (bookRepository.existsById(string)) {
+				bookRepository.deleteById(string);
+				successCounts.add(string);
+				counter++;
+				count.setSuccessCount(counter);
+				count.setSuccess("Ids :" + successCounts);
 
-		for (String st : strArr) {
-			if (bookRepository.existsById(st)) {
-
-				bookRepository.deleteById(st);
-				s.add(st);
-				successCount++;
-				count.setSuccessCount(successCount);
-				count.setSuccess(s);
-				ct.add(count);
+				list.add(count);
 			}
 
 			else {
-				errorCount++;
-				count1.setErrorCount(errorCount);
-				BookDTO res1 = new BookDTO();
-				res1.setCode("book005");
-				res1.setMessage("id not found");
-				res1.setData("id : " + st);
-				res2.add(res1);
-				count1.setFailure(res2);
+				flag++;
+				count2.setErrorCount(flag);
+				BookDTO bookDTO = new BookDTO();
+				bookDTO.setCode("Book190");
+				bookDTO.setMessage("Id not found");
+				bookDTO.setData(string);
+				errorCounts.add(bookDTO);
+				count2.setFailure(errorCounts);
 			}
+
 		}
-		List<Object> obj = new ArrayList<Object>();
-		obj.add(count);
-		obj.add(count1);
-		res.setCode("book005");
-		res.setMessage("One or more objects are not processed");
-		res.setData(obj);
-		return res;
+
+		List<Object> objects = new ArrayList<Object>();
+		objects.add(count);
+		objects.add(count2);
+		bookDTO1.setCode("Book9087");
+		bookDTO1.setMessage("One or more objects are not processed");
+		bookDTO1.setData(objects);
+
+		return bookDTO1;
 	}
+
 }

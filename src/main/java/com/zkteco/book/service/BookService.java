@@ -26,6 +26,6 @@ public interface BookService {
 
 	BookDTO updateBookById(String Id, ResultDTO resultDto) throws BookNotFoundException;
 
-	public BookDTO deleteBulkById(String id) throws BookNotFoundException;
+	public BookDTO deleteBulkById(String ids) throws BookNotFoundException;
 
 }
