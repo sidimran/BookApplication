@@ -1,15 +1,16 @@
 package com.zkteco.book.service.impl;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
 import com.zkteco.book.converter.BookConverter;
 import com.zkteco.book.delete.response.ErrorCount;
 import com.zkteco.book.delete.response.SuccessCount;
@@ -174,20 +175,22 @@ public class BookServiceImpl implements BookService {
 
 		SuccessCount count = new SuccessCount();
 		ErrorCount count2 = new ErrorCount();
-		ArrayList<String> successCounts = new ArrayList<String>();
-		List<SuccessCount> list = new ArrayList<SuccessCount>();
+		ArrayList<String> countList = new ArrayList<String>();
+
+		List<SuccessCount> successCount = new ArrayList<SuccessCount>();
 		List<BookDTO> errorCounts = new ArrayList<BookDTO>();
 
 		for (String string : str) {
 
 			if (bookRepository.existsById(string)) {
 				bookRepository.deleteById(string);
-				successCounts.add(string);
+				countList.add(string);
+				System.out.println(countList);
 				counter++;
 				count.setSuccessCount(counter);
-				count.setSuccess("Ids :" + successCounts);
+				count.setSuccess("Ids :" + countList);
 
-				list.add(count);
+				successCount.add(count);
 			}
 
 			else {
@@ -207,10 +210,29 @@ public class BookServiceImpl implements BookService {
 		objects.add(count);
 		objects.add(count2);
 		bookDTO1.setCode("Book9087");
-		bookDTO1.setMessage("One or more objects are not processed");
+//		bookDTO1.setMessage("One or more objects are not processed");
 		bookDTO1.setData(objects);
 
 		return bookDTO1;
+	}
+
+	@Override
+	public BookDTO saveBookTesting(ResultDTO inputBook) {
+
+		try {
+			Book book = new Book();
+			book = bookRepository.save(book);
+			ResultDTO resultDTO = bookConverter.entityToDto(book);
+			BookDTO bookDTO = new BookDTO();
+			bookDTO.setCode("book001");
+			bookDTO.setMessage("Books Successfully Created");
+			bookDTO.setData(resultDTO);
+			return bookDTO;
+
+		} catch (NullPointerException ex) {
+			System.out.println(ex.getMessage());
+		}
+		return null;
 	}
 
 }

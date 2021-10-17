@@ -5,14 +5,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
-
-import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,10 +23,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Book {
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-
-	@Column(name = "book_id")
+	@GeneratedValue(generator = "system-uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Column(name = "book_id")	
 	
 	private String bookId;
 
@@ -76,5 +77,7 @@ public class Book {
 
 	@Column(name = "Author_Email")
 	private String author_emailId;
+
+
 
 }
