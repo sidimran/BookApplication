@@ -13,6 +13,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.sun.istack.NotNull;
+import com.zkteco.book.dto.ResultDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -76,5 +77,7 @@ public class Book {
 
 	@Column(name = "Author_Email")
 	private String author_emailId;
+
+	
 
 }

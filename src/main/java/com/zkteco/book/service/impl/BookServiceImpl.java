@@ -118,7 +118,7 @@ public class BookServiceImpl implements BookService {
 		try {
 
 			Book book = bookConverter.dtoToEntity(dto);
-			book = bookRepository.save(book);
+//			book = bookRepository.save(book);
 			BookDTO resultDTO = bookConverter.entityToDto(book);
 			ResultDTO resultDto = new ResultDTO();
 			resultDto.setCode("book001");
@@ -136,8 +136,14 @@ public class BookServiceImpl implements BookService {
 	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
 		Optional<Book> orElse = bookRepository.findById(id);
 		if (!orElse.isPresent()) {
-			throw new ResourceNotFoundException("Book Not Available");
+			
+			ResultDTO resultDTO = new ResultDTO();
+			resultDTO.setMessage("Book Not Available");
+			return resultDTO;
+//			throw new ResourceNotFoundException("Book Not Available");
 		}
+		else
+		{
 		Book bk = orElse.get();
 		BookDTO res = bookConverter.entityToDto(bk);
 		ResultDTO resultDTO = new ResultDTO();
@@ -145,6 +151,7 @@ public class BookServiceImpl implements BookService {
 		resultDTO.setMessage("Successfully fetched by Id");
 		resultDTO.setData(res);
 		return resultDTO;
+		}
 	}
 
 	@Override
