@@ -15,15 +15,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookDTO {
 
-//	private String code;
-//	private String message;
-//	private Object data;
-//	
-	
 	private String bookId;
 	@NotNull(message = "Enter Book ISBN")
 	private String isbn;
-
 
 	@NotNull(message = "Enter Book Number")
 	private String bookName;

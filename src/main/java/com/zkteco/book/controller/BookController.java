@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
-//import com.zkteco.book.exception.BookNotFoundException;
 import com.zkteco.book.exception.ResourceNotFoundException;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
