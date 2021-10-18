@@ -1,23 +1,22 @@
 package com.zkteco.book.service.impl;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
 import com.zkteco.book.converter.BookConverter;
 import com.zkteco.book.delete.response.ErrorCount;
 import com.zkteco.book.delete.response.SuccessCount;
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
 import com.zkteco.book.entity.Book;
-import com.zkteco.book.exception.BookNotFoundException;
+import com.zkteco.book.exception.ResourceNotFoundException;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
 
@@ -31,71 +30,70 @@ public class BookServiceImpl implements BookService {
 	private BookConverter bookConverter;
 
 	@Override
-	public BookDTO updateBookById(String Id, ResultDTO resultDto) throws BookNotFoundException {
+	public ResultDTO updateBookById(String Id, BookDTO bookDto) throws ResourceNotFoundException {
 
 		Optional<Book> book = bookRepository.findById(Id);
 
 		if (!book.isPresent()) {
-			throw new BookNotFoundException("Orders Not Available");
+			throw new ResourceNotFoundException("Book Not Available");
 		}
 		Book book1 = book.get();
-		if (Objects.nonNull(resultDto.getIsbn()) && !"".equalsIgnoreCase(resultDto.getIsbn())) {
-			book1.setIsbn(resultDto.getIsbn());
+		if (Objects.nonNull(bookDto.getIsbn()) && !"".equalsIgnoreCase(bookDto.getIsbn())) {
+			book1.setIsbn(bookDto.getIsbn());
 		}
-		if (Objects.nonNull(resultDto.getBookName()) && !"".equalsIgnoreCase(resultDto.getBookName())) {
-			book1.setBookName(resultDto.getBookName());
+		if (Objects.nonNull(bookDto.getBookName()) && !"".equalsIgnoreCase(bookDto.getBookName())) {
+			book1.setBookName(bookDto.getBookName());
 		}
-		if (Objects.nonNull(resultDto.getTitle()) && !"".equalsIgnoreCase(resultDto.getTitle())) {
-			book1.setTitle(resultDto.getTitle());
+		if (Objects.nonNull(bookDto.getTitle()) && !"".equalsIgnoreCase(bookDto.getTitle())) {
+			book1.setTitle(bookDto.getTitle());
 		}
-		if (Objects.nonNull(resultDto.getLanguage()) && !"".equalsIgnoreCase(resultDto.getLanguage())) {
-			book1.setLanguage(resultDto.getLanguage());
+		if (Objects.nonNull(bookDto.getLanguage()) && !"".equalsIgnoreCase(bookDto.getLanguage())) {
+			book1.setLanguage(bookDto.getLanguage());
 		}
-		if (Objects.nonNull(resultDto.getPublisher()) && !"".equalsIgnoreCase(resultDto.getPublisher())) {
-			book1.setPublisher(resultDto.getPublisher());
+		if (Objects.nonNull(bookDto.getPublisher()) && !"".equalsIgnoreCase(bookDto.getPublisher())) {
+			book1.setPublisher(bookDto.getPublisher());
 		}
-		if (Objects.nonNull(resultDto.getPublishedDate())) {
-			book1.setPublishedDate(resultDto.getPublishedDate());
-		}
-
-		if (Objects.nonNull(resultDto.getPublisher_phone())) {
-			book1.setPublisher_phone(resultDto.getPublisher_phone());
+		if (Objects.nonNull(bookDto.getPublishedDate())) {
+			book1.setPublishedDate(bookDto.getPublishedDate());
 		}
 
-		if (Objects.nonNull(resultDto.getPublisher_address())
-				&& !"".equalsIgnoreCase(resultDto.getPublisher_address())) {
-			book1.setPublisher_address(resultDto.getPublisher_address());
+		if (Objects.nonNull(bookDto.getPublisher_phone())) {
+			book1.setPublisher_phone(bookDto.getPublisher_phone());
 		}
 
-		if (Objects.nonNull(resultDto.getPub_updated_date())) {
-			book1.setPub_updated_date(resultDto.getPub_updated_date());
+		if (Objects.nonNull(bookDto.getPublisher_address()) && !"".equalsIgnoreCase(bookDto.getPublisher_address())) {
+			book1.setPublisher_address(bookDto.getPublisher_address());
 		}
 
-		if (Objects.nonNull(resultDto.getPrice())) {
-			book1.setPrice(resultDto.getPrice());
-		}
-		if (Objects.nonNull(resultDto.getVolume())) {
-			book1.setVolume(resultDto.getVolume());
-		}
-		if (Objects.nonNull(resultDto.getAuthorId())) {
-			book1.setAuthorId(resultDto.getAuthorId());
+		if (Objects.nonNull(bookDto.getPub_updated_date())) {
+			book1.setPub_updated_date(bookDto.getPub_updated_date());
 		}
 
-		if (Objects.nonNull(resultDto.getAuthorName()) && !"".equalsIgnoreCase(resultDto.getAuthorName())) {
-			book1.setAuthorName(resultDto.getAuthorName());
+		if (Objects.nonNull(bookDto.getPrice())) {
+			book1.setPrice(bookDto.getPrice());
+		}
+		if (Objects.nonNull(bookDto.getVolume())) {
+			book1.setVolume(bookDto.getVolume());
+		}
+		if (Objects.nonNull(bookDto.getAuthorId())) {
+			book1.setAuthorId(bookDto.getAuthorId());
 		}
 
-		if (Objects.nonNull(resultDto.getAuthor_emailId()) && !"".equalsIgnoreCase(resultDto.getAuthor_emailId())) {
-			book1.setAuthor_emailId(resultDto.getAuthor_emailId());
+		if (Objects.nonNull(bookDto.getAuthorName()) && !"".equalsIgnoreCase(bookDto.getAuthorName())) {
+			book1.setAuthorName(bookDto.getAuthorName());
+		}
+
+		if (Objects.nonNull(bookDto.getAuthor_emailId()) && !"".equalsIgnoreCase(bookDto.getAuthor_emailId())) {
+			book1.setAuthor_emailId(bookDto.getAuthor_emailId());
 		}
 
 		Book book2 = bookRepository.save(book1);
-		ResultDTO dto = bookConverter.entityToDto(book2);
-		BookDTO bookDto = new BookDTO();
-		bookDto.setCode("ORD-01");
-		bookDto.setMessage("Order resource updated Successfully");
-		bookDto.setData(dto);
-		return bookDto;
+		BookDTO dto = bookConverter.entityToDto(book2);
+		ResultDTO resultDto = new ResultDTO();
+		resultDto.setCode("ORD-01");
+		resultDto.setMessage("Order resource updated Successfully");
+		resultDto.setData(dto);
+		return resultDto;
 	}
 
 //	@Override
@@ -115,18 +113,18 @@ public class BookServiceImpl implements BookService {
 //	}
 
 	@Override
-	public BookDTO saveBook(ResultDTO dto) {
+	public ResultDTO saveBook(BookDTO dto) {
 
 		try {
 
 			Book book = bookConverter.dtoToEntity(dto);
 			book = bookRepository.save(book);
-			ResultDTO resultDTO = bookConverter.entityToDto(book);
-			BookDTO bookDTO = new BookDTO();
-			bookDTO.setCode("book001");
-			bookDTO.setMessage("Books Successfully Created");
-			bookDTO.setData(resultDTO);
-			return bookDTO;
+			BookDTO resultDTO = bookConverter.entityToDto(book);
+			ResultDTO resultDto = new ResultDTO();
+			resultDto.setCode("book001");
+			resultDto.setMessage("Books Successfully Created");
+			resultDto.setData(resultDTO);
+			return resultDto;
 
 		} catch (NullPointerException ex) {
 			System.out.println(ex.getMessage());
@@ -135,72 +133,69 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO fetchById(String id) throws BookNotFoundException {
+	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
 		Optional<Book> orElse = bookRepository.findById(id);
 		if (!orElse.isPresent()) {
-			throw new BookNotFoundException("Book Not Available");
+			throw new ResourceNotFoundException("Book Not Available");
 		}
 		Book bk = orElse.get();
-		ResultDTO res = bookConverter.entityToDto(bk);
-		BookDTO bookDTO = new BookDTO();
-		bookDTO.setCode("Emp002");
-		bookDTO.setMessage("Successfully fetched by Id");
-		bookDTO.setData(res);
-		return bookDTO;
+		BookDTO res = bookConverter.entityToDto(bk);
+		ResultDTO resultDTO = new ResultDTO();
+		resultDTO.setCode("Emp002");
+		resultDTO.setMessage("Successfully fetched by Id");
+		resultDTO.setData(res);
+		return resultDTO;
 	}
 
 	@Override
-	public BookDTO getAllBooks(int page, int size) {
+	public ResultDTO getAllBooks(int page, int size) {
 		Pageable page1 = PageRequest.of(page, size);
 		Page<Book> page2 = bookRepository.findAll(page1);
 		List<Book> book = new ArrayList<Book>();
 		for (Book b : page2) {
 			book.add(b);
 		}
-		BookDTO bookDto = new BookDTO();
-		bookDto.setCode("book001");
-		bookDto.setMessage("succesfully fetched");
-		bookDto.setData(book);
-		return bookDto;
+		ResultDTO resultDto = new ResultDTO();
+		resultDto.setCode("book001");
+		resultDto.setMessage("succesfully fetched");
+		resultDto.setData(book);
+		return resultDto;
 	}
 
 	@Override
-	public BookDTO deleteBulkById(String ids) throws BookNotFoundException {
+	public ResultDTO deleteBulkById(String ids) {
 
 		String[] str = null;
 		str = ids.split(",");
 		int counter = 0;
 		int flag = 0;
-		BookDTO bookDTO1 = new BookDTO();
+		ResultDTO resultDTO = new ResultDTO();
 
 		SuccessCount count = new SuccessCount();
 		ErrorCount count2 = new ErrorCount();
-		ArrayList<String> countList = new ArrayList<String>();
-
-		List<SuccessCount> successCount = new ArrayList<SuccessCount>();
-		List<BookDTO> errorCounts = new ArrayList<BookDTO>();
+		ArrayList<String> successCounts = new ArrayList<String>();
+		List<SuccessCount> list = new ArrayList<SuccessCount>();
+		List<ResultDTO> errorCounts = new ArrayList<ResultDTO>();
 
 		for (String string : str) {
 
 			if (bookRepository.existsById(string)) {
 				bookRepository.deleteById(string);
-				countList.add(string);
-				System.out.println(countList);
+				successCounts.add(string);
 				counter++;
 				count.setSuccessCount(counter);
-				count.setSuccess("Ids :" + countList);
+				count.setSuccess("Ids :" + successCounts);
 
-				successCount.add(count);
+				list.add(count);
 			}
 
 			else {
 				flag++;
 				count2.setErrorCount(flag);
-				BookDTO bookDTO = new BookDTO();
-				bookDTO.setCode("Book190");
-				bookDTO.setMessage("Id not found");
-				bookDTO.setData(string);
-				errorCounts.add(bookDTO);
+				resultDTO.setCode("Book190");
+				resultDTO.setMessage("Id not found");
+				resultDTO.setData(string);
+				errorCounts.add(resultDTO);
 				count2.setFailure(errorCounts);
 			}
 
@@ -209,30 +204,11 @@ public class BookServiceImpl implements BookService {
 		List<Object> objects = new ArrayList<Object>();
 		objects.add(count);
 		objects.add(count2);
-		bookDTO1.setCode("Book9087");
-//		bookDTO1.setMessage("One or more objects are not processed");
-		bookDTO1.setData(objects);
+		resultDTO.setCode("Book9087");
+		resultDTO.setMessage("One or more objects are not processed");
+		resultDTO.setData(objects);
 
-		return bookDTO1;
-	}
-
-	@Override
-	public BookDTO saveBookTesting(ResultDTO inputBook) {
-
-		try {
-			Book book = new Book();
-			book = bookRepository.save(book);
-			ResultDTO resultDTO = bookConverter.entityToDto(book);
-			BookDTO bookDTO = new BookDTO();
-			bookDTO.setCode("book001");
-			bookDTO.setMessage("Books Successfully Created");
-			bookDTO.setData(resultDTO);
-			return bookDTO;
-
-		} catch (NullPointerException ex) {
-			System.out.println(ex.getMessage());
-		}
-		return null;
+		return resultDTO;
 	}
 
 }

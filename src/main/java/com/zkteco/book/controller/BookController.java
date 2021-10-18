@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
-import com.zkteco.book.exception.BookNotFoundException;
+//import com.zkteco.book.exception.BookNotFoundException;
+import com.zkteco.book.exception.ResourceNotFoundException;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
 
@@ -37,36 +38,36 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 
-	@GetMapping("/page")
+	@GetMapping
 	@ApiOperation(value = "Book data record by filter and sorting")
-	public BookDTO findPaginated(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size)
-			throws BookNotFoundException {
-		BookDTO res = bookService.getAllBooks(page, size);
+	public ResultDTO findPaginated(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "5") int size) throws ResourceNotFoundException {
+		ResultDTO res = bookService.getAllBooks(page, size);
 		return res;
 	}
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Return Book data by book Id")
-	public BookDTO fetchBookById(@PathVariable(value = "id") String id) throws BookNotFoundException {
+	public ResultDTO fetchBookById(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
 		return bookService.fetchById(id);
 	}
 
 	@PostMapping
 	@ApiOperation(value = "Post book data")
-	public BookDTO saveBook(@Valid @RequestBody ResultDTO dto) {
+	public ResultDTO saveBook(@Valid @RequestBody BookDTO dto) {
 		return bookService.saveBook(dto);
 	}
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "update book data")
-	public BookDTO updateBook(@PathVariable(value = "id") String id, @Valid @RequestBody ResultDTO bk)
-			throws NotFoundException, BookNotFoundException {
+	public ResultDTO updateBook(@PathVariable(value = "id") String id, @Valid @RequestBody BookDTO bk)
+			throws NotFoundException, ResourceNotFoundException {
 		return bookService.updateBookById(id, bk);
 	}
 
 	@DeleteMapping
 	@ApiOperation(value = "delete data by one or more Id's")
-	public BookDTO deleteBookById(@RequestParam String id) throws BookNotFoundException {
+	public ResultDTO deleteBookById(@RequestParam String id) throws ResourceNotFoundException {
 		return bookService.deleteBulkById(id);
 	}
 

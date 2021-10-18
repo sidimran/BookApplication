@@ -1,26 +1,25 @@
 package com.zkteco.book.service;
 
-import java.util.Optional;
-
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
-import com.zkteco.book.exception.BookNotFoundException;
+import com.zkteco.book.exception.ResourceNotFoundException;
 
 public interface BookService {
 
 //	public BookDTO deleteBookById(String id) throws BookNotFoundException;
 
-	public BookDTO saveBook(ResultDTO dto);
+	public ResultDTO saveBook(BookDTO dto);
 
-	public BookDTO fetchById(String id) throws BookNotFoundException;
+	public ResultDTO fetchById(String id) throws ResourceNotFoundException;
 
-	public BookDTO getAllBooks(int page, int size);
+	public ResultDTO getAllBooks(int page, int size);
 
-	BookDTO updateBookById(String Id, ResultDTO resultDto) throws BookNotFoundException;
+	public ResultDTO updateBookById(String Id, BookDTO bookDto) throws ResourceNotFoundException;
 
-	public BookDTO deleteBulkById(String ids) throws BookNotFoundException;
+	public ResultDTO deleteBulkById(String ids) throws ResourceNotFoundException;
 
-	public BookDTO saveBookTesting(ResultDTO inputBook);
+	
+
 
 
 }

@@ -1,19 +1,21 @@
 package com.zkteco.book.converter;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
 import com.zkteco.book.entity.Book;
 
 @Component
 public class BookConverter {
 
-	public ResultDTO entityToDto(Book book) {
+	public BookDTO entityToDto(Book book) {
 		
-		ResultDTO dto = new ResultDTO();
+		BookDTO dto = new BookDTO();
 		dto.setBookId(book.getBookId());
 		dto.setIsbn(book.getIsbn());
 		dto.setBookName(book.getBookName());
@@ -33,35 +35,35 @@ public class BookConverter {
 
 	}
 
-	public List<ResultDTO> entityToDto(List<Book> book) {
+	public List<BookDTO> entityToDto(List<Book> book) {
 
 		return book.stream().map(x -> entityToDto(x)).collect(Collectors.toList());
 
 	}
 
-	public Book dtoToEntity(ResultDTO resultdto) {
+	public Book dtoToEntity(BookDTO bookDTO) {
 		Book book = new Book();
-		book.setBookId(resultdto.getBookId());
-		book.setIsbn(resultdto.getIsbn());
-		book.setBookName(resultdto.getBookName());
-		book.setTitle(resultdto.getTitle());
-		book.setLanguage(resultdto.getLanguage());
-		book.setPublisher(resultdto.getPublisher());
-		book.setPublishedDate(resultdto.getPublishedDate());
-		book.setPublisher_phone(resultdto.getPublisher_phone());
-		book.setPublisher_address(resultdto.getPublisher_address());
-		book.setPub_updated_date(resultdto.getPub_updated_date());
-		book.setPrice(resultdto.getPrice());
-		book.setVolume(resultdto.getVolume());
-		book.setAuthorId(resultdto.getAuthorId());
-		book.setAuthorName(resultdto.getAuthorName());
-		book.setAuthor_emailId(resultdto.getAuthor_emailId());
+		book.setBookId(bookDTO.getBookId());
+		book.setIsbn(bookDTO.getIsbn());
+		book.setBookName(bookDTO.getBookName());
+		book.setTitle(bookDTO.getTitle());
+		book.setLanguage(bookDTO.getLanguage());
+		book.setPublisher(bookDTO.getPublisher());
+		book.setPublishedDate(bookDTO.getPublishedDate());
+		book.setPublisher_phone(bookDTO.getPublisher_phone());
+		book.setPublisher_address(bookDTO.getPublisher_address());
+		book.setPub_updated_date(bookDTO.getPub_updated_date());
+		book.setPrice(bookDTO.getPrice());
+		book.setVolume(bookDTO.getVolume());
+		book.setAuthorId(bookDTO.getAuthorId());
+		book.setAuthorName(bookDTO.getAuthorName());
+		book.setAuthor_emailId(bookDTO.getAuthor_emailId());
 
 		return book;
 
 	}
 
-	public List<Book> dtoToEntity(List<ResultDTO> dto) {
+	public List<Book> dtoToEntity(List<BookDTO> dto) {
 
 		return dto.stream().map(x -> dtoToEntity(x)).collect(Collectors.toList());
 
