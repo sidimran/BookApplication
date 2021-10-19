@@ -22,7 +22,9 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
 	public Book save(List<Book> book);
 
-	@Query(value = "Select t from Book t where t.bookId = ?1")
-	public Optional<Book> findByBookId(String id);
+//	@Query(value = "Select t from Book t where t.book_id = ?1")
+//	Book findByBookId(String id);
+	
+	
 
 }

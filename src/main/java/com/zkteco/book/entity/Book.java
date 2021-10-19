@@ -30,8 +30,7 @@ public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
-	@Column(name = "book_id")
-	
+	@Column(name = "book_id")	
 	private String bookId;
 
 	@Column(name = "ISBN")

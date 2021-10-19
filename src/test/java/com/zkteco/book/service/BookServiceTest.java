@@ -4,78 +4,81 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Optional;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
 import com.zkteco.book.entity.Book;
-import com.zkteco.book.repository.BookRepository;
+import com.zkteco.book.exception.ResourceNotFoundException;
 
 @SpringBootTest
 class BookServiceTest {
 
-	ResultDTO result = new ResultDTO();
-
 	@Autowired
 	private BookService bookService;
 
-	@MockBean
-	private static BookRepository bookRepository;
+//	@MockBean
+//	private static BookRepository bookRepository;
 
-	@BeforeEach
-	void setUp() {
-		
-		BookDTO book = new BookDTO();
-		ResultDTO rst = bookService.saveBook(book);
-		assertEquals(result, rst);
+//	Optional<Book> book = Optional.of(new Book());
+
+//	@BeforeEach
+//	void setUp() throws Exception {
+//
+//		book = Optional.of(
+//				Book.builder().bookId("9211").isbn("1231232133123").bookName("Bat").title("BT-01").language("Engliash")
+//						.publisher("Syed").publisher_phone(888418923L).publisher_address("RT NAGAR").build());
+//
+//		Mockito.when(bookRepository.findById("9211")).thenReturn(book);
+//
+//	}
+
+	ResultDTO result = new ResultDTO();
+
+	@Test
+	@Order(1)
+	@DisplayName("Get Data based on valid Book Id")
+	public void whenValidBookId_thenBookShouldFound() throws ResourceNotFoundException {
+		String bookId = "92";
+
+		result = bookService.fetchById(bookId);
+		assertEquals(result.getMessage(), "Book fetched successfully");
+
 	}
 
 	@Test
-	void testFetchBookById() {
-		BookDTO book = new BookDTO();
-		book.setBookId("111");
-		book.setIsbn("113123");
-		book.setBookName("dell");
-		book.setTitle("Sameer");
-		book.setLanguage("laptop");
-		book.setPublisher("Syed");
-		book.setPublisher_phone(8884189238L);
-		book.setPublisher_address("RT Nagar");
-		book.setAuthorId(122443222222L);
-		book.setAuthorName("Sameer");
-		book.setAuthor_emailId("sameer@gmail.com");
+	public void whenBookIdDoesNotExist() throws ResourceNotFoundException {
+		String bookId = "007";
+		result = bookService.fetchById(bookId);
+		assertEquals(result.getMessage(), "Book not available");
 
-		ResultDTO rst = bookService.saveBook(book);
-		assertEquals(rst.getMessage(), "Books Successfully Created");
-		;
+//		Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+//			bookService.fetchById("343434535");
+//		});
+//		String expectedMessage = "book Not Available";
+//		String actualMessage = exception.getMessage();
+//		assertTrue(actualMessage.contains(expectedMessage));
 
 	}
 
 	@Test
-	void testFetchBookByIds() {
- 
-	 
-		ResultDTO rst=	bookService.fetchById("96");
-		
-		
-		 assertEquals(rst.getMessage(), "Successfully fetched by Id");;
+	public void bookWithFilterSorting() {
 
+		int page = 0, size = 5;
+
+		result = bookService.getAllBooks(page, size);
+		assertEquals(result.getMessage(), "succesfully fetched");
 	}
-	
-	@Test
-	void testFetchBookByIdsIfNotExist() {
- 
-	 
-		ResultDTO rst=	bookService.fetchById("96");
-		
-		
-		 assertEquals(rst.getMessage(), "Book Not Available");;
 
+	@Test
+	public void deleteByIdNotFound() {
+
+		String id = "9111";
+		result = bookService.deleteBulkById(id);
+		assertEquals(result.getMessage(), "One or more objects are not processed");
 	}
 
 }

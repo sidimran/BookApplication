@@ -17,10 +17,7 @@ public class ResultDTO {
 	private String code;
 	private String message;
 	private Object data;
-	public Object getBookId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 
 }

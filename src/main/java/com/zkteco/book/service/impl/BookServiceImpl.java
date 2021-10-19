@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,10 +24,11 @@ import com.zkteco.book.service.BookService;
 
 @Component
 public class BookServiceImpl implements BookService {
+
 	@Autowired
-	BookRepository bookRepository;
+	private BookRepository bookRepository;
 	@Autowired
-	BookService bookService;
+	private BookService bookService;
 	@Autowired
 	private BookConverter bookConverter;
 
@@ -132,25 +135,47 @@ public class BookServiceImpl implements BookService {
 		return null;
 	}
 
+//	@Override
+//	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
+//
+//		Book book = bookRepository.findByBookId(id);
+//		if (book == null) {
+//
+//			ResultDTO resultDTO = new ResultDTO();
+//			resultDTO.setMessage("Book Not Available");
+//			return resultDTO;
+////			throw new ResourceNotFoundException("Book Not Available");
+//		} else {
+//			Book bk = new Book();
+//			BookDTO res = bookConverter.entityToDto(bk);
+//			ResultDTO resultDTO = new ResultDTO();
+//			resultDTO.setCode("Emp002");
+//			resultDTO.setMessage("Successfully fetched by Id");
+//			resultDTO.setData(res);
+//			return resultDTO;
+//		}
+//	}
+
 	@Override
 	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
+
 		Optional<Book> orElse = bookRepository.findById(id);
+       
 		if (!orElse.isPresent()) {
-			
-			ResultDTO resultDTO = new ResultDTO();
-			resultDTO.setMessage("Book Not Available");
-			return resultDTO;
-//			throw new ResourceNotFoundException("Book Not Available");
-		}
-		else
-		{
-		Book bk = orElse.get();
-		BookDTO res = bookConverter.entityToDto(bk);
-		ResultDTO resultDTO = new ResultDTO();
-		resultDTO.setCode("Emp002");
-		resultDTO.setMessage("Successfully fetched by Id");
-		resultDTO.setData(res);
-		return resultDTO;
+			ResultDTO result = new ResultDTO();
+			result.setCode("Book-01");
+			result.setMessage("Book not available"); 
+			return result;
+		//	throw new ResourceNotFoundException("book Not Available");
+		} else {
+			Book ord = orElse.get();
+
+			BookDTO dto = bookConverter.entityToDto(ord);
+			ResultDTO result = new ResultDTO();
+			result.setCode("Book-01");
+			result.setMessage("Book fetched successfully");
+			result.setData(dto);
+			return result;
 		}
 	}
 
