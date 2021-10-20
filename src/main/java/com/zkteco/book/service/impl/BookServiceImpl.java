@@ -121,7 +121,7 @@ public class BookServiceImpl implements BookService {
 		try {
 
 			Book book = bookConverter.dtoToEntity(dto);
-//			book = bookRepository.save(book);
+			book = bookRepository.save(book);
 			BookDTO resultDTO = bookConverter.entityToDto(book);
 			ResultDTO resultDto = new ResultDTO();
 			resultDto.setCode("book001");
