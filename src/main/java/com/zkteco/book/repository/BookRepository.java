@@ -17,14 +17,8 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
 	public Book findByBookNameIgnoreCase(String bookName);
 
-	@Query(value = "Select t from Book t where t.isbn like ?1 OR t.bookName like ?1 OR t.title like ?1 OR t.language like ?1 OR t.publisher like ?1 OR t.publisher_phone like ?1 OR t.publisher_address like ?1 OR t.price like ?1 OR t.authorId like ?1 OR t.authorName like ?1 OR t.author_emailId like ?1 OR t.volume like ?1")
+	@Query(value = "Select t from Book t where t.isbn like ?1 OR t.bookName like ?1 OR t.title like ?1 OR t.language like ?1 OR t.publisher like ?1 OR t.publisherphone like ?1 OR t.publisheraddress like ?1 OR t.price like ?1 OR t.authorId like ?1 OR t.authorName like ?1 OR t.authoremailId like ?1 OR t.volume like ?1")
 	Page<Book> bookContaining(String search, Pageable paging) throws ResourceNotFoundException;
 
-//	public Book save(List<Book> book);
-
-//	@Query(value = "Select t from Book t where t.book_id = ?1")
-//	public Book findByBookId(String id);
-	
-	
 
 }

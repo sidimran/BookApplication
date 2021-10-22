@@ -26,62 +26,62 @@ class BookServiceTest {
 	@Test
 	@Order(1)
 	@DisplayName("Get Data based on valid Book Id")
-	public void testWhenValidBookId_thenBookShouldFound() throws ResourceNotFoundException {
+	void testWhenValidBookId_thenBookShouldFound() throws ResourceNotFoundException {
 		String bookId = "1";
 
 		result = bookService.fetchById(bookId);
-		assertEquals(result.getMessage(), "Book fetched successfully");
+		assertEquals("Book fetched successfully", result.getMessage());
 
 	}
 
 	@Test
-	public void testWhenBookIdDoesNotExist() throws ResourceNotFoundException {
+	void testWhenBookIdDoesNotExist() throws ResourceNotFoundException {
 		String bookId = "007";
 		result = bookService.fetchById(bookId);
-		assertEquals(result.getMessage(), "Book not available");
+		assertEquals("Book not available", result.getMessage());
 
 	}
 
 	@Test
-	public void testBookWithFilterSorting() {
+	void testBookWithFilterSorting() {
 
 		int page = 0, size = 5;
 
 		result = bookService.getAllBooks(page, size);
-		assertEquals(result.getMessage(), "succesfully fetched");
+		assertEquals("succesfully fetched", result.getMessage());
 	}
 
 	@Test
-	public void testDeleteByIdNotFound() {
+	void testDeleteByIdNotFound() {
 
 		String id = "9111";
 		result = bookService.deleteBulkById(id);
-		assertEquals(result.getMessage(), "One or more objects are not processed");
+		assertEquals("One or more objects are not processed", result.getMessage());
 	}
 
 	@Test
-	public void testDeleteById() {
+	void testDeleteById() {
 		String id = "3";
 		result = bookService.deleteBulkById(id);
-		assertEquals(result.getMessage(), "One or more objects are not processed");
+		assertEquals("One or more objects are not processed", result.getMessage());
 	}
 
 	@Test
-	public void testSaveBook() {
+	void testSaveBook() {
 		BookDTO dto = new BookDTO();
 		dto.setIsbn("123");
 		dto.setBookName("HelloJava");
 		dto.setTitle("Yello");
 		dto.setLanguage("English");
 		dto.setPublisher("kavi");
-		dto.setPublisher_phone(88877877L);
-		dto.setPublisher_address("asdasdas");
+		dto.setPublisherphone(88877877L);
+		dto.setPublisheraddress("asdasdas");
 		dto.setPrice(200);
 		dto.setVolume(1);
 		dto.setAuthorId(123L);
 		dto.setAuthorName("Pratap");
-		dto.setAuthor_emailId("pratap@gmail.com");
+		dto.setAuthoremailId("pratap@gmail.com");
 		result = bookService.saveBook(dto);
-		assertEquals(result.getMessage(), "Books Successfully Created");
+		assertEquals("Books Successfully Created", result.getMessage());
 	}
 }

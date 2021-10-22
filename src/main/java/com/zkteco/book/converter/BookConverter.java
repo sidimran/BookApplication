@@ -14,7 +14,7 @@ import com.zkteco.book.entity.Book;
 public class BookConverter {
 
 	public BookDTO entityToDto(Book book) {
-		
+
 		BookDTO dto = new BookDTO();
 		dto.setBookId(book.getBookId());
 		dto.setIsbn(book.getIsbn());
@@ -23,21 +23,21 @@ public class BookConverter {
 		dto.setLanguage(book.getLanguage());
 		dto.setPublisher(book.getPublisher());
 		dto.setPublishedDate(book.getPublishedDate());
-		dto.setPublisher_phone(book.getPublisher_phone());
-		dto.setPublisher_address(book.getPublisher_address());
-		dto.setPub_updated_date(book.getPub_updated_date());
+		dto.setPublisherphone(book.getPublisherphone());
+		dto.setPublisheraddress(book.getPublisheraddress());
+		dto.setPubupdateddate(book.getPubupdateddate());
 		dto.setPrice(book.getPrice());
 		dto.setVolume(book.getVolume());
 		dto.setAuthorId(book.getAuthorId());
 		dto.setAuthorName(book.getAuthorName());
-		dto.setAuthor_emailId(book.getAuthor_emailId());
+		dto.setAuthoremailId(book.getAuthoremailId());
 		return dto;
 
 	}
 
 	public List<BookDTO> entityToDto(List<Book> book) {
 
-		return book.stream().map(x -> entityToDto(x)).collect(Collectors.toList());
+		return book.stream().map(this::entityToDto).collect(Collectors.toList());
 
 	}
 
@@ -50,14 +50,14 @@ public class BookConverter {
 		book.setLanguage(bookDTO.getLanguage());
 		book.setPublisher(bookDTO.getPublisher());
 		book.setPublishedDate(bookDTO.getPublishedDate());
-		book.setPublisher_phone(bookDTO.getPublisher_phone());
-		book.setPublisher_address(bookDTO.getPublisher_address());
-		book.setPub_updated_date(bookDTO.getPub_updated_date());
+		book.setPublisherphone(bookDTO.getPublisherphone());
+		book.setPublisheraddress(bookDTO.getPublisheraddress());
+		book.setPubupdateddate(bookDTO.getPubupdateddate());
 		book.setPrice(bookDTO.getPrice());
 		book.setVolume(bookDTO.getVolume());
 		book.setAuthorId(bookDTO.getAuthorId());
 		book.setAuthorName(bookDTO.getAuthorName());
-		book.setAuthor_emailId(bookDTO.getAuthor_emailId());
+		book.setAuthoremailId(bookDTO.getAuthoremailId());
 
 		return book;
 
@@ -65,7 +65,7 @@ public class BookConverter {
 
 	public List<Book> dtoToEntity(List<BookDTO> dto) {
 
-		return dto.stream().map(x -> dtoToEntity(x)).collect(Collectors.toList());
+		return dto.stream().map(this::dtoToEntity).collect(Collectors.toList());
 
 	}
 

@@ -33,9 +33,9 @@ public class BookServiceImpl implements BookService {
 	private BookConverter bookConverter;
 
 	@Override
-	public ResultDTO updateBookById(String Id, BookDTO bookDto) throws ResourceNotFoundException {
+	public ResultDTO updateBookById(String id, BookDTO bookDto) throws ResourceNotFoundException {
 
-		Optional<Book> book = bookRepository.findById(Id);
+		Optional<Book> book = bookRepository.findById(id);
 
 		if (!book.isPresent()) {
 			throw new ResourceNotFoundException("Book Not Available");
@@ -60,16 +60,16 @@ public class BookServiceImpl implements BookService {
 			book1.setPublishedDate(bookDto.getPublishedDate());
 		}
 
-		if (Objects.nonNull(bookDto.getPublisher_phone())) {
-			book1.setPublisher_phone(bookDto.getPublisher_phone());
+		if (Objects.nonNull(bookDto.getPublisherphone())) {
+			book1.setPublisherphone(bookDto.getPublisherphone());
 		}
 
-		if (Objects.nonNull(bookDto.getPublisher_address()) && !"".equalsIgnoreCase(bookDto.getPublisher_address())) {
-			book1.setPublisher_address(bookDto.getPublisher_address());
+		if (Objects.nonNull(bookDto.getPublisheraddress()) && !"".equalsIgnoreCase(bookDto.getPublisheraddress())) {
+			book1.setPublisheraddress(bookDto.getPublisheraddress());
 		}
 
-		if (Objects.nonNull(bookDto.getPub_updated_date())) {
-			book1.setPub_updated_date(bookDto.getPub_updated_date());
+		if (Objects.nonNull(bookDto.getPubupdateddate())) {
+			book1.setPubupdateddate(bookDto.getPubupdateddate());
 		}
 
 		if (Objects.nonNull(bookDto.getPrice())) {
@@ -86,8 +86,8 @@ public class BookServiceImpl implements BookService {
 			book1.setAuthorName(bookDto.getAuthorName());
 		}
 
-		if (Objects.nonNull(bookDto.getAuthor_emailId()) && !"".equalsIgnoreCase(bookDto.getAuthor_emailId())) {
-			book1.setAuthor_emailId(bookDto.getAuthor_emailId());
+		if (Objects.nonNull(bookDto.getAuthoremailId()) && !"".equalsIgnoreCase(bookDto.getAuthoremailId())) {
+			book1.setAuthoremailId(bookDto.getAuthoremailId());
 		}
 
 		Book book2 = bookRepository.save(book1);
@@ -160,13 +160,13 @@ public class BookServiceImpl implements BookService {
 	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
 
 		Optional<Book> orElse = bookRepository.findById(id);
-       
+
 		if (!orElse.isPresent()) {
 			ResultDTO result = new ResultDTO();
 			result.setCode("Book-01");
-			result.setMessage("Book not available"); 
+			result.setMessage("Book not available");
 			return result;
-		//	throw new ResourceNotFoundException("book Not Available");
+			// throw new ResourceNotFoundException("book Not Available");
 		} else {
 			Book ord = orElse.get();
 
@@ -183,7 +183,7 @@ public class BookServiceImpl implements BookService {
 	public ResultDTO getAllBooks(int page, int size) {
 		Pageable page1 = PageRequest.of(page, size);
 		Page<Book> page2 = bookRepository.findAll(page1);
-		List<Book> book = new ArrayList<Book>();
+		List<Book> book = new ArrayList<>();
 		for (Book b : page2) {
 			book.add(b);
 		}
@@ -205,9 +205,9 @@ public class BookServiceImpl implements BookService {
 
 		SuccessCount count = new SuccessCount();
 		ErrorCount count2 = new ErrorCount();
-		ArrayList<String> successCounts = new ArrayList<String>();
-		List<SuccessCount> list = new ArrayList<SuccessCount>();
-		List<ResultDTO> errorCounts = new ArrayList<ResultDTO>();
+		ArrayList<String> successCounts = new ArrayList<>();
+		List<SuccessCount> list = new ArrayList<>();
+		List<ResultDTO> errorCounts = new ArrayList<>();
 
 		for (String string : str) {
 
@@ -233,7 +233,7 @@ public class BookServiceImpl implements BookService {
 
 		}
 
-		List<Object> objects = new ArrayList<Object>();
+		List<Object> objects = new ArrayList<>();
 		objects.add(count);
 		objects.add(count2);
 		resultDTO.setCode("Book9087");

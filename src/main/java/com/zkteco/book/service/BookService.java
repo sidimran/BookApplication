@@ -14,7 +14,7 @@ public interface BookService {
 
 	public ResultDTO getAllBooks(int page, int size);
 
-	public ResultDTO updateBookById(String Id, BookDTO bookDto) throws ResourceNotFoundException;
+	public ResultDTO updateBookById(String id, BookDTO bookDto) throws ResourceNotFoundException;
 
 	public ResultDTO deleteBulkById(String ids) throws ResourceNotFoundException;
 

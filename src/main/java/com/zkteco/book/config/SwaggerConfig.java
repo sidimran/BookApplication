@@ -24,7 +24,7 @@ public class SwaggerConfig {
 
 	private ApiInfo metaInfo() {
 
-		ApiInfo apiInfo = new ApiInfo(
+		return new ApiInfo(
 
 				"Spring Boot Swagger Example API", "Spring Boot Swagger Example API for Youtube", "1.0",
 				"Terms of Service",
@@ -32,10 +32,6 @@ public class SwaggerConfig {
 				"Apache License Version 2.1", "https://www.apache.org/license.html"
 
 		);
-		return apiInfo;
-		
-		
-		
 
 	}
 

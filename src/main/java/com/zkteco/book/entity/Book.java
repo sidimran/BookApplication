@@ -52,14 +52,14 @@ public class Book {
 	private Date publishedDate = new Date();
 
 	@Column(name = "Phone")
-	private Long publisher_phone;
+	private Long publisherphone;
 
 	@Column(name = "Address")
-	private String publisher_address;
+	private String publisheraddress;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "Update_Date")
-	private Date pub_updated_date = new Date();
+	private Date pubupdateddate = new Date();
 
 	@Column(name = "Price")
 	private int price;
@@ -73,8 +73,8 @@ public class Book {
 	@Column(name = "Author_Name")
 	private String authorName;
 
-	@Column(name = "Author_Email")
-	private String author_emailId;
+	@Column(name = "AuthorEmail")
+	private String authoremailId;
 
 	
 

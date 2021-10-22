@@ -32,16 +32,16 @@ public class BookDTO {
 	private String publisher;
 
 	@NotNull(message = "Enter Published Date")
-	private Date publishedDate = new Date();
+	private  Date  publishedDate = new Date();
 
 	@NotNull(message = "Enter Publisher Phone Number")
-	private Long publisher_phone;
+	private Long publisherphone;
 
 	@NotNull(message = "Enter Publisher Address")
-	private String publisher_address;
+	private String publisheraddress;
 
 	@NotNull(message = "Enter Published Updated_date")
-	private Date pub_updated_date = new Date();
+	private Date pubupdateddate = new Date();
 
 	@NotNull(message = "Enter Book Price")
 	private int price;
@@ -56,6 +56,6 @@ public class BookDTO {
 	private String authorName;
 
 	@NotNull(message = "Enter EmailId")
-	private String author_emailId;
+	private String authoremailId;
 
 }

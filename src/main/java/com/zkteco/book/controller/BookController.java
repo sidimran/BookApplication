@@ -41,8 +41,8 @@ public class BookController {
 	@ApiOperation(value = "Book data record by filter and sorting")
 	public ResultDTO findPaginated(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "5") int size) throws ResourceNotFoundException {
-		ResultDTO res = bookService.getAllBooks(page, size);
-		return res;
+		return  bookService.getAllBooks(page, size);
+	
 	}
 
 	@GetMapping("/{id}")
@@ -60,7 +60,7 @@ public class BookController {
 	@PutMapping("/{id}")
 	@ApiOperation(value = "update book data")
 	public ResultDTO updateBook(@PathVariable(value = "id") String id, @Valid @RequestBody BookDTO bk)
-			throws NotFoundException, ResourceNotFoundException {
+			throws ResourceNotFoundException {
 		return bookService.updateBookById(id, bk);
 	}
 
