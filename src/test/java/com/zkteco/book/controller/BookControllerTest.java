@@ -1,48 +1,70 @@
 package com.zkteco.book.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mockito;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
 import com.zkteco.book.entity.Book;
+import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
 
-@WebMvcTest(BookController.class)
+//@WebMvcTest(BookController.class)
+//@EnableAutoConfiguration
+//@ContextConfiguration(classes = {BookController.class})
+//@SpringBootTest
+
+
+@RunWith(SpringRunner.class)
 class BookControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@MockBean
-	private BookService BookService;
-
+	
 	@Autowired
+	private BookService bookService;
+
 	private Book book;
+	
+	BookDTO bookdto;
+
+	ResultDTO result = new ResultDTO();
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUpBeforeClass() throws Exception {
 
-		Optional<Book> book = Optional.of(Book.builder().bookId("402881827c7df7ac017c7df917bb0003").isbn("11122111")
-				.bookName("dxccxc").title("sdasdas").language("asdasdas").publisher("sdasdas").authorName("sasdasd")
-				.author_emailId("asdasd@gmail.com").build());
+		bookdto = BookDTO.builder().bookName("Mechanical Engineering").language("Dell").price(100).build();
 
 	}
 
 	@Test
-	void saveBook() {
+	void testSaveBook() throws Exception {
 
-		Optional<BookDTO> book = Optional.empty();
+		BookDTO inputbook = BookDTO.builder().bookName("Mechanical Engineering").language("Dell").price(100).build();
+		result.setData(inputbook);
+
+		Mockito.when(bookService.saveBook(inputbook)).thenReturn((ResultDTO) result);
+
+		mockMvc.perform(post("/api/v1/book").contentType(MediaType.APPLICATION_JSON)
+				.content("  {\r\n" + "    \"bookName\":\"Heasdasllo\",\r\n"
+						+ "    \"language\":\"Englasxasdasdish\",\r\n" + "    \"price\":100  \r\n" + " }"))
+				.andExpect(status().isOk());
 
 	}
 

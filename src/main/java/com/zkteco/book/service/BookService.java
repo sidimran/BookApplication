@@ -6,8 +6,6 @@ import com.zkteco.book.exception.ResourceNotFoundException;
 
 public interface BookService {
 
-//	public BookDTO deleteBookById(String id) throws BookNotFoundException;
-
 	public ResultDTO saveBook(BookDTO dto);
 
 	public ResultDTO fetchById(String id) throws ResourceNotFoundException;
@@ -17,9 +15,5 @@ public interface BookService {
 	public ResultDTO updateBookById(String id, BookDTO bookDto) throws ResourceNotFoundException;
 
 	public ResultDTO deleteBulkById(String ids) throws ResourceNotFoundException;
-
-	
-
-
 
 }

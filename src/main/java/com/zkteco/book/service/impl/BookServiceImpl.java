@@ -12,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import com.zkteco.book.converter.BookConverter;
 import com.zkteco.book.delete.response.ErrorCount;
 import com.zkteco.book.delete.response.SuccessCount;
@@ -22,7 +24,7 @@ import com.zkteco.book.exception.ResourceNotFoundException;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
 
-@Component
+@Service
 public class BookServiceImpl implements BookService {
 
 	@Autowired
