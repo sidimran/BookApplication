@@ -1,5 +1,7 @@
 package com.zkteco.book.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
+import com.zkteco.book.entity.Book;
 import com.zkteco.book.exception.ResourceNotFoundException;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
@@ -41,14 +45,14 @@ public class BookController {
 	@GetMapping
 	@ApiOperation(value = "Book data record by filter and sorting")
 	public ResultDTO findPaginated(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "5") int size) throws ResourceNotFoundException {
+			@RequestParam(defaultValue = "6") int size) throws ResourceNotFoundException {
 		return bookService.getAllBooks(page, size);
 
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("fetchById/{id}")
 	@ApiOperation(value = "Return Book data by book Id")
-	public ResultDTO fetchBookById(@PathVariable(value = "id") String id) throws ResourceNotFoundException {
+	public ResultDTO fetchBookById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {		
 		return bookService.fetchById(id);
 	}
 
@@ -60,9 +64,10 @@ public class BookController {
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "update book data")
-	public ResultDTO updateBook(@PathVariable(value = "id") String id, @Valid @RequestBody BookDTO bk)
+	public ResultDTO updateBook(@PathVariable(value = "id") Integer id, @Valid @RequestBody BookDTO bk)
 			throws ResourceNotFoundException {
-		return bookService.updateBookById(id, bk);
+		ResultDTO resultDTO = bookService.updateBookById(id, bk);
+		return resultDTO;
 	}
 
 	@DeleteMapping

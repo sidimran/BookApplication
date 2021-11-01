@@ -8,11 +8,11 @@ public interface BookService {
 
 	public ResultDTO saveBook(BookDTO dto);
 
-	public ResultDTO fetchById(String id) throws ResourceNotFoundException;
+	public ResultDTO fetchById(Integer id) throws ResourceNotFoundException;
 
 	public ResultDTO getAllBooks(int page, int size);
 
-	public ResultDTO updateBookById(String id, BookDTO bookDto) throws ResourceNotFoundException;
+	public ResultDTO updateBookById(Integer id, BookDTO bookDto) throws ResourceNotFoundException;
 
 	public ResultDTO deleteBulkById(String ids) throws ResourceNotFoundException;
 

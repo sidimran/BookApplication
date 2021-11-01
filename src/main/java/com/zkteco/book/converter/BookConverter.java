@@ -16,7 +16,7 @@ public class BookConverter {
 	public BookDTO entityToDto(Book book) {
 
 		BookDTO dto = new BookDTO();
-		dto.setBookId(book.getBookId());
+		dto.setBookId(book.getBookId().toString());
 		dto.setIsbn(book.getIsbn());
 		dto.setBookName(book.getBookName());
 		dto.setTitle(book.getTitle());
@@ -43,7 +43,7 @@ public class BookConverter {
 
 	public Book dtoToEntity(BookDTO bookDTO) {
 		Book book = new Book();
-		book.setBookId(bookDTO.getBookId());
+	//	book.setBookId(Integer.parseInt(bookDTO.getBookId()));
 		book.setIsbn(bookDTO.getIsbn());
 		book.setBookName(bookDTO.getBookName());
 		book.setTitle(bookDTO.getTitle());

@@ -1,70 +1,99 @@
 package com.zkteco.book.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+
 import com.zkteco.book.dto.BookDTO;
 import com.zkteco.book.dto.ResultDTO;
-import com.zkteco.book.entity.Book;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
-
-//@WebMvcTest(BookController.class)
-//@EnableAutoConfiguration
-//@ContextConfiguration(classes = {BookController.class})
-//@SpringBootTest
-
-
-@RunWith(SpringRunner.class)
+import org.mockito.quality.Strictness;
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 class BookControllerTest {
 
-	@Autowired
-	private MockMvc mockMvc;
-	
-	@Autowired
+	@InjectMocks
+	private BookController bookController;
+	 
+
+	@Mock
 	private BookService bookService;
+ 
 
-	private Book book;
-	
-	BookDTO bookdto;
+	@Mock
+	 ResultDTO resultDTO;
 
-	ResultDTO result = new ResultDTO();
+	BookDTO bookDTO = new BookDTO();
+ 
 
-	@BeforeEach
-	void setUpBeforeClass() throws Exception {
+	@Test
+	void testForPostController() {
+		
+		bookDTO.setBookName("Dell");
+		bookDTO.setTitle("Yellow");
+		bookDTO.setLanguage("English");
+		bookDTO.setPublisher("lulu");
+		bookDTO.setPublisherphone(8887875212L);
+		bookDTO.setPublisheraddress("RTNAGAR");
+		bookDTO.setPrice(100);
+		bookDTO.setVolume(3);
+		bookDTO.setAuthorId(34455L);
+		bookDTO.setAuthorName("Syed");
+		bookDTO.setAuthoremailId("syed@gmail.com");
 
-		bookdto = BookDTO.builder().bookName("Mechanical Engineering").language("Dell").price(100).build();
+		Mockito.when(bookService.saveBook(bookDTO)).thenReturn(resultDTO);
+		resultDTO = bookService.saveBook(bookDTO);
+		assertNotNull(resultDTO); 
 
 	}
 
 	@Test
-	void testSaveBook() throws Exception {
+	void testForPutController() {
 
-		BookDTO inputbook = BookDTO.builder().bookName("Mechanical Engineering").language("Dell").price(100).build();
-		result.setData(inputbook);
+		Integer id = 11;
+		bookDTO.setBookId(id.toString());
+		bookDTO.setBookName("Dell");
+		bookDTO.setTitle("Yellow");
+		bookDTO.setLanguage("English");
+		bookDTO.setPublisher("lulu");
+		bookDTO.setPublisherphone(8887875212L);
+		bookDTO.setPublisheraddress("RTNAGAR");
+		bookDTO.setPrice(100);
+		bookDTO.setVolume(3);
+		bookDTO.setAuthorId(34455L);
+		bookDTO.setAuthorName("Syed");
+		bookDTO.setAuthoremailId("syed@gmail.com");
+		
 
-		Mockito.when(bookService.saveBook(inputbook)).thenReturn((ResultDTO) result);
+		Mockito.when(bookController.updateBook(id, bookDTO)).thenReturn(new ResultDTO());
+ 	resultDTO = bookController.updateBook(id, bookDTO);
+		assertNotNull(resultDTO);
 
-		mockMvc.perform(post("/api/v1/book").contentType(MediaType.APPLICATION_JSON)
-				.content("  {\r\n" + "    \"bookName\":\"Heasdasllo\",\r\n"
-						+ "    \"language\":\"Englasxasdasdish\",\r\n" + "    \"price\":100  \r\n" + " }"))
-				.andExpect(status().isOk());
+	}
+
+	@Test
+	void testForDeleteController() {
+
+		String id = "123";
+		Mockito.when(bookController.deleteBookById(id)).thenReturn(resultDTO);
+		resultDTO = bookController.deleteBookById(id);
+		assertNotNull(resultDTO);
+	}
+
+	@Test
+	void testForGetController() {
+		
+		Integer id = 10;
+		Mockito.when(bookController.fetchBookById(id)).thenReturn(resultDTO);
+		resultDTO = bookController.fetchBookById(id);
+		assertNotNull(resultDTO);
 
 	}
 

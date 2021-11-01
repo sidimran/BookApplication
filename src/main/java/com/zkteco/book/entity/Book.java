@@ -10,32 +10,29 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-
-import com.sun.istack.NotNull;
-import com.zkteco.book.dto.ResultDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bookid")	
-	private String bookId;
+	private Integer bookId;
 
 	@Column(name = "ISBN")
 	private String isbn;
 
-	@Column(name = "book_name")
+	@Column(name = "bookname")
 	private String bookName;
 
 	@Column(name = "title")
@@ -48,7 +45,7 @@ public class Book {
 	private String publisher;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "published_date")
+	@Column(name = "publisheddate")
 	private Date publishedDate = new Date();
 
 	@Column(name = "Phone")
@@ -58,7 +55,7 @@ public class Book {
 	private String publisheraddress;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "Update_Date")
+	@Column(name = "UpdateDate")
 	private Date pubupdateddate = new Date();
 
 	@Column(name = "Price")
@@ -67,14 +64,16 @@ public class Book {
 	@Column(name = "Volume")
 	private int volume;
 
-	@Column(name = "Author_ID")
+	@Column(name = "AuthorID")
 	private Long authorId;
 
-	@Column(name = "Author_Name")
+	@Column(name = "AuthorName")
 	private String authorName;
 
 	@Column(name = "AuthorEmail")
 	private String authoremailId;
+
+
 
 	
 

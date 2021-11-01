@@ -1,17 +1,14 @@
 package com.zkteco.book.service.impl;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.zkteco.book.converter.BookConverter;
@@ -35,12 +32,16 @@ public class BookServiceImpl implements BookService {
 	private BookConverter bookConverter;
 
 	@Override
-	public ResultDTO updateBookById(String id, BookDTO bookDto) throws ResourceNotFoundException {
+	public ResultDTO updateBookById(Integer id, BookDTO bookDto) throws ResourceNotFoundException {
 
 		Optional<Book> book = bookRepository.findById(id);
 
-		if (!book.isPresent()) {
-			throw new ResourceNotFoundException("Book Not Available");
+		if (book.get().getBookId() == null) {
+
+			ResultDTO dto = new ResultDTO();
+			dto.setMessage("Book Id Not Found");
+			return dto;
+
 		}
 		Book book1 = book.get();
 		if (Objects.nonNull(bookDto.getIsbn()) && !"".equalsIgnoreCase(bookDto.getIsbn())) {
@@ -101,22 +102,6 @@ public class BookServiceImpl implements BookService {
 		return resultDto;
 	}
 
-//	@Override
-//	public BookDTO deleteBookById(String id) throws BookNotFoundException {
-//
-//		BookDTO bookDTO = null;
-//		Optional<Book> dto = bookRepository.findByBookId(id);
-//		bookDTO = new BookDTO();
-//		if (dto.isPresent()) {
-//			bookRepository.deleteById(id);
-//			bookDTO.setMessage("Deleted Successfully");
-//		} else {
-//
-//			bookDTO.setMessage("Id Does not Exist");
-//		}
-//		return bookDTO;
-//	}
-
 	@Override
 	public ResultDTO saveBook(BookDTO dto) {
 
@@ -137,54 +122,39 @@ public class BookServiceImpl implements BookService {
 		return null;
 	}
 
-//	@Override
-//	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
-//
-//		Book book = bookRepository.findByBookId(id);
-//		if (book == null) {
-//
-//			ResultDTO resultDTO = new ResultDTO();
-//			resultDTO.setMessage("Book Not Available");
-//			return resultDTO;
-////			throw new ResourceNotFoundException("Book Not Available");
-//		} else {
-//			Book bk = new Book();
-//			BookDTO res = bookConverter.entityToDto(bk);
-//			ResultDTO resultDTO = new ResultDTO();
-//			resultDTO.setCode("Emp002");
-//			resultDTO.setMessage("Successfully fetched by Id");
-//			resultDTO.setData(res);
-//			return resultDTO;
-//		}
-//	}
-
 	@Override
-	public ResultDTO fetchById(String id) throws ResourceNotFoundException {
+	public ResultDTO fetchById(Integer id) throws ResourceNotFoundException {
 
-		Optional<Book> orElse = bookRepository.findById(id);
+		Optional<Book> book = bookRepository.findById(id);
 
-		if (!orElse.isPresent()) {
+		if (book.get().getBookId() != null) {
+
+			BookDTO dto1 = bookConverter.entityToDto(book.get());
+
+			ResultDTO result = new ResultDTO();
+			result.setCode("Book-01");
+			result.setMessage("Book fetched successfully");
+			result.setData(dto1);
+			return result;
+
+		} else {
+
 			ResultDTO result = new ResultDTO();
 			result.setCode("Book-01");
 			result.setMessage("Book not available");
 			return result;
-			// throw new ResourceNotFoundException("book Not Available");
-		} else {
-			Book ord = orElse.get();
 
-			BookDTO dto = bookConverter.entityToDto(ord);
-			ResultDTO result = new ResultDTO();
-			result.setCode("Book-01");
-			result.setMessage("Book fetched successfully");
-			result.setData(dto);
-			return result;
 		}
+
 	}
 
 	@Override
 	public ResultDTO getAllBooks(int page, int size) {
+
 		Pageable page1 = PageRequest.of(page, size);
+
 		Page<Book> page2 = bookRepository.findAll(page1);
+
 		List<Book> book = new ArrayList<>();
 		for (Book b : page2) {
 			book.add(b);
@@ -200,7 +170,9 @@ public class BookServiceImpl implements BookService {
 	public ResultDTO deleteBulkById(String ids) {
 
 		String[] str = null;
+
 		str = ids.split(",");
+
 		int counter = 0;
 		int flag = 0;
 		ResultDTO resultDTO = new ResultDTO();
@@ -213,8 +185,8 @@ public class BookServiceImpl implements BookService {
 
 		for (String string : str) {
 
-			if (bookRepository.existsById(string)) {
-				bookRepository.deleteById(string);
+			if (bookRepository.getById(Integer.parseInt(string.trim())) != null) {
+				bookRepository.deleteById(Integer.parseInt(string));
 				successCounts.add(string);
 				counter++;
 				count.setSuccessCount(counter);

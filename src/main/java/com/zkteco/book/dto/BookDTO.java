@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookDTO {
 
+	
 	private String bookId;
+
 	@NotNull(message = "Enter Book ISBN")
 	private String isbn;
 
@@ -32,7 +34,7 @@ public class BookDTO {
 	private String publisher;
 
 	@NotNull(message = "Enter Published Date")
-	private  Date  publishedDate = new Date();
+	private Date publishedDate = new Date();
 
 	@NotNull(message = "Enter Publisher Phone Number")
 	private Long publisherphone;
