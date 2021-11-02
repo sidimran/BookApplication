@@ -97,7 +97,7 @@ public class BookServiceImpl implements BookService {
 		BookDTO dto = bookConverter.entityToDto(book2);
 		ResultDTO resultDto = new ResultDTO();
 		resultDto.setCode("ORD-01");
-		resultDto.setMessage("Order resource updated Successfully");
+		resultDto.setMessage("Book updated successfully");
 		resultDto.setData(dto);
 		return resultDto;
 	}
