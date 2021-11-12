@@ -15,27 +15,24 @@ import com.zkteco.book.dto.ResultDTO;
 import com.zkteco.book.repository.BookRepository;
 import com.zkteco.book.service.BookService;
 import org.mockito.quality.Strictness;
+
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 class BookControllerTest {
 
 	@InjectMocks
 	private BookController bookController;
-	 
 
 	@Mock
 	private BookService bookService;
- 
-
-	@Mock
-	 ResultDTO resultDTO;
 
 	BookDTO bookDTO = new BookDTO();
- 
 
 	@Test
 	void testForPostController() {
-		
+
+		ResultDTO resultDTO = new ResultDTO();
+
 		bookDTO.setBookName("Dell");
 		bookDTO.setTitle("Yellow");
 		bookDTO.setLanguage("English");
@@ -48,9 +45,9 @@ class BookControllerTest {
 		bookDTO.setAuthorName("Syed");
 		bookDTO.setAuthoremailId("syed@gmail.com");
 
-		Mockito.when(bookService.saveBook(bookDTO)).thenReturn(resultDTO);
+		Mockito.when(bookService.saveBook(bookDTO)).thenReturn(new ResultDTO());
 		resultDTO = bookService.saveBook(bookDTO);
-		assertNotNull(resultDTO); 
+		assertNotNull(resultDTO);
 
 	}
 
@@ -70,10 +67,9 @@ class BookControllerTest {
 		bookDTO.setAuthorId(34455L);
 		bookDTO.setAuthorName("Syed");
 		bookDTO.setAuthoremailId("syed@gmail.com");
-		
 
 		Mockito.when(bookController.updateBook(id, bookDTO)).thenReturn(new ResultDTO());
- 	resultDTO = bookController.updateBook(id, bookDTO);
+		ResultDTO resultDTO = bookController.updateBook(id, bookDTO);
 		assertNotNull(resultDTO);
 
 	}
@@ -82,17 +78,17 @@ class BookControllerTest {
 	void testForDeleteController() {
 
 		String id = "123";
-		Mockito.when(bookController.deleteBookById(id)).thenReturn(resultDTO);
-		resultDTO = bookController.deleteBookById(id);
+		Mockito.when(bookController.deleteBookById(id)).thenReturn(new ResultDTO());
+		ResultDTO resultDTO = bookController.deleteBookById(id);
 		assertNotNull(resultDTO);
 	}
 
 	@Test
 	void testForGetController() {
-		
+
 		Integer id = 10;
-		Mockito.when(bookController.fetchBookById(id)).thenReturn(resultDTO);
-		resultDTO = bookController.fetchBookById(id);
+		Mockito.when(bookController.fetchBookById(id)).thenReturn(new ResultDTO());
+		ResultDTO resultDTO = bookController.fetchBookById(id);
 		assertNotNull(resultDTO);
 
 	}

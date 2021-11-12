@@ -40,31 +40,6 @@ class BookServiceTest {
 	@Mock
 	BookConverter bookConverter;
 
-	@Mock
-	private PageRequest pageRequest;
-
-	@Mock
-	private Page page;
-
-	@Mock
-	private SuccessCount SuccessCount;
-
-	@Mock
-	private ErrorCount errorCount;
-
-	ResultDTO result = new ResultDTO();
-	
-	@BeforeEach
-	void beforeTestValidBookId() {
-		
-		Book book = Book.builder().bookId(3).isbn("123456").bookName("Blue").language("English").build();
-		
-		Mockito.when(bookRepository.findById(3)).thenReturn(Optional.of(book));
-		
-	}
-	
-	
-
 	@Test
 	void testWhenValidBookId_thenBookShouldFound() throws ResourceNotFoundException {
 
@@ -72,7 +47,7 @@ class BookServiceTest {
 		Book book = new Book();
 		book.setBookId(id);
 		Mockito.when(bookRepository.findById(id)).thenReturn(Optional.of(book));
-		result = bookServiceImpl.fetchById(id);
+		ResultDTO result = bookServiceImpl.fetchById(id);
 		assertEquals("Book fetched successfully", result.getMessage());
 
 	}
@@ -84,7 +59,7 @@ class BookServiceTest {
 		Book book = new Book();
 
 		Mockito.when(bookRepository.findById(id)).thenReturn(Optional.of(book));
-		result = bookServiceImpl.fetchById(id);
+		ResultDTO result = bookServiceImpl.fetchById(id);
 		assertEquals("Book not available", result.getMessage());
 
 	}
@@ -151,7 +126,7 @@ class BookServiceTest {
 		bookDTO.setAuthoremailId("syed@gmail.com");
 
 		Mockito.when(bookRepository.findById(id)).thenReturn(Optional.of(book));
-		result = bookServiceImpl.updateBookById(id, bookDTO);
+		ResultDTO result = bookServiceImpl.updateBookById(id, bookDTO);
 		assertEquals("Book updated successfully", result.getMessage());
 
 	}
@@ -164,7 +139,7 @@ class BookServiceTest {
 
 		BookDTO bookDto = new BookDTO();
 		Mockito.when(bookRepository.findById(id)).thenReturn(Optional.of(book));
-		result = bookServiceImpl.updateBookById(id, bookDto);
+		ResultDTO result = bookServiceImpl.updateBookById(id, bookDto);
 		assertEquals("Book Id Not Found", result.getMessage());
 
 	}
@@ -191,7 +166,7 @@ class BookServiceTest {
 
 		Page<Book> bookpageList = new PageImpl<>(bookList);
 		Mockito.when(bookRepository.findAll(pageable)).thenReturn(bookpageList);
-		result = bookServiceImpl.getAllBooks(0, 6);
+		ResultDTO result = bookServiceImpl.getAllBooks(0, 6);
 		assertEquals("succesfully fetched", result.getMessage());
 
 	}
@@ -200,7 +175,7 @@ class BookServiceTest {
 	void testDeleteById() {
 
 		String id = "1";
-		result = bookServiceImpl.deleteBulkById(id);
+		ResultDTO result = bookServiceImpl.deleteBulkById(id);
 		assertEquals("One or more objects are not processed", result.getMessage());
 	}
 

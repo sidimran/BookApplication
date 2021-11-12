@@ -28,6 +28,7 @@ public class BookServiceImpl implements BookService {
 	private BookRepository bookRepository;
 	@Autowired
 	private BookService bookService;
+	
 	@Autowired
 	private BookConverter bookConverter;
 
@@ -124,12 +125,13 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public ResultDTO fetchById(Integer id) throws ResourceNotFoundException {
-
+	
 		Optional<Book> book = bookRepository.findById(id);
+		
 
 		if (book.get().getBookId() != null) {
 
-			BookDTO dto1 = bookConverter.entityToDto(book.get());
+			BookDTO	dto1 = bookConverter.entityToDto(book.get());
 
 			ResultDTO result = new ResultDTO();
 			result.setCode("Book-01");
@@ -137,8 +139,9 @@ public class BookServiceImpl implements BookService {
 			result.setData(dto1);
 			return result;
 
-		} else {
+		} else
 
+		{
 			ResultDTO result = new ResultDTO();
 			result.setCode("Book-01");
 			result.setMessage("Book not available");
