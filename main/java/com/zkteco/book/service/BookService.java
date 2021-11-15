@@ -1,0 +1,19 @@
+package com.zkteco.book.service;
+
+import com.zkteco.book.dto.BookDTO;
+import com.zkteco.book.dto.ResultDTO;
+import com.zkteco.book.exception.ResourceNotFoundException;
+
+public interface BookService {
+
+	public ResultDTO saveBook(BookDTO dto);
+
+	public ResultDTO fetchById(Integer id) throws ResourceNotFoundException;
+
+	public ResultDTO getAllBooks(int page, int size);
+
+	public ResultDTO updateBookById(Integer id, BookDTO bookDto) throws ResourceNotFoundException;
+
+	public ResultDTO deleteBulkById(String ids) throws ResourceNotFoundException;
+
+}
