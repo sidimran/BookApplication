@@ -153,7 +153,7 @@ class BookServiceTest {
 		book.setLanguage("english");
 		book.setPublisher("lulu");
 		book.setPublisherphone(8887875212L);
-		book.setPublisheraddress("RTNAGAR");
+		book.setPublisheraddress("Dollar Colony");
 		book.setPrice(100);
 		book.setVolume(3);
 		book.setAuthorId(34455L);
